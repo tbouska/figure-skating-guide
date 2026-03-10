@@ -2109,7 +2109,7 @@ tbody tr:hover {
     const checkboxes = document.querySelectorAll('.compare-checkbox');
     const bar = document.getElementById('comparisonBar');
     const text = document.getElementById('comparisonText');
-    const btn = document.getElementById('compareBtn');
+    const btn = document.getElementById('compareBtn'); // Used as compareBtn reference
     const overlay = document.getElementById('comparisonOverlay');
     const content = document.getElementById('comparisonContent');
     const close = document.getElementById('closeCompare');
@@ -2121,7 +2121,9 @@ tbody tr:hover {
           if (state.selected.length >= 2) {
             // Uncheck the oldest one
             const oldId = state.selected.shift();
-            document.querySelector(`.compare-checkbox[data-jump-id="${oldId}"]`).checked = false;
+            // document.querySelector(`.compare-checkbox[data-jump-id="${oldId}"]`).checked = false; // Fixed below logic
+            const oldCb = document.querySelector(`.compare-checkbox[data-jump-id="${oldId}"]`);
+            if(oldCb) oldCb.checked = false;
           }
           state.selected.push(id);
         } else {
@@ -2134,8 +2136,18 @@ tbody tr:hover {
     function updateUI() {
       if (state.selected.length > 0) {
         bar.classList.add('active');
-        text.textContent = `Vybráno: ${state.selected.map(id => state.data[id].name).join(' vs ')}`;
-        btn.disabled = state.selected.length !== 2;
+        const names = state.selected.map(id => state.data[id] ? state.data[id].name : id); // Safety check
+        text.textContent = `Vybráno: ${names.join(' vs ')}`;
+        
+        if (state.selected.length === 2) {
+           btn.disabled = false;
+           btn.style.opacity = 1;
+           btn.style.cursor = 'pointer';
+        } else {
+           btn.disabled = true;
+           btn.style.opacity = 0.5;
+           btn.style.cursor = 'not-allowed';
+        }
       } else {
         bar.classList.remove('active');
       }
@@ -2149,6 +2161,11 @@ tbody tr:hover {
 
     close.addEventListener('click', () => {
       overlay.classList.remove('active');
+      // Clear selection logic
+      state.selected = [];
+      checkboxes.forEach(cb => cb.checked = false);
+      updateUI();
+      content.innerHTML = ''; // Clean up
     });
 
     function renderComparison() {
