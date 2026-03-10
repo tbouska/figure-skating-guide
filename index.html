@@ -869,7 +869,7 @@ a {
 /* Animation Container & Stage */
 .takeoff-stage {
   position: relative;
-  height: 8rem; /* Taller stage for jumps */
+  height: 14rem; /* Taller stage for jumps */
   margin-top: 1rem;
   overflow: hidden;
   background: linear-gradient(to bottom, #f0faff 0%, #e0f4ff 100%);
@@ -899,10 +899,10 @@ a {
 /* Skater Icon Base */
 .takeoff-skater {
   position: absolute;
-  bottom: 0.8rem;
+  bottom: 1.6rem;
   left: 0;
-  width: 2.5rem;
-  height: 3.5rem; /* Taller for better posture visibility */
+  width: 5rem;
+  height: 7rem; /* Taller for better posture visibility */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -923,19 +923,19 @@ a {
 .takeoff-demo.axel .path-line { stroke: #FFB347; opacity: 0.8; }
 
 @keyframes anim-axel {
-  0% { left: 5%; bottom: 0.8rem; transform: scaleX(1) rotateY(0deg); }
-  25% { left: 35%; bottom: 0.8rem; transform: scaleX(1) rotateY(0deg); }
-  30% { left: 40%; bottom: 1.2rem; transform: scaleX(1) rotateZ(-15deg); }
+  0% { left: 5%; bottom: 1.6rem; transform: scaleX(1) rotateY(0deg); }
+  25% { left: 35%; bottom: 1.6rem; transform: scaleX(1) rotateY(0deg); }
+  30% { left: 40%; bottom: 2.4rem; transform: scaleX(1) rotateZ(-15deg); }
   
   /* Peak height reduced to 3.8rem */
-  35% { left: 45%; bottom: 2.5rem; transform: scaleX(1) rotateY(0deg); }
-  40% { left: 50%; bottom: 3.8rem; transform: scaleX(1) rotateY(180deg); }
-  45% { left: 55%; bottom: 3.8rem; transform: scaleX(1) rotateY(360deg); }
-  50% { left: 60%; bottom: 3.2rem; transform: scaleX(1) rotateY(540deg); }
+  35% { left: 45%; bottom: 5rem; transform: scaleX(1) rotateY(0deg); }
+  40% { left: 50%; bottom: 7.6rem; transform: scaleX(1) rotateY(180deg); }
+  45% { left: 55%; bottom: 7.6rem; transform: scaleX(1) rotateY(360deg); }
+  50% { left: 60%; bottom: 6.4rem; transform: scaleX(1) rotateY(540deg); }
   
-  60% { left: 70%; bottom: 0.8rem; transform: scaleX(-1); }
-  70% { left: 75%; bottom: 0.5rem; transform: scaleX(-1) skewX(10deg); }
-  100% { left: 95%; bottom: 0.8rem; transform: scaleX(-1); }
+  60% { left: 70%; bottom: 1.6rem; transform: scaleX(-1); }
+  70% { left: 75%; bottom: 1.0rem; transform: scaleX(-1) skewX(10deg); }
+  100% { left: 95%; bottom: 1.6rem; transform: scaleX(-1); }
 }
 
 /* 2. TOE JUMPS FAMILY */
@@ -948,20 +948,20 @@ a {
 }
 
 @keyframes anim-toeloop {
-  0% { left: 5%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
-  30% { left: 35%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); } /* Short Glide */
+  0% { left: 5%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
+  30% { left: 35%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); } /* Short Glide */
   
   /* Quick Pick */
-  35% { left: 38%; bottom: 0.8rem; transform: scaleX(-1) rotateZ(10deg); }
+  35% { left: 38%; bottom: 1.6rem; transform: scaleX(-1) rotateZ(10deg); }
   
   /* Jump */
-  40% { left: 45%; bottom: 3.5rem; transform: scaleX(-1) rotateY(180deg); }
-  48% { left: 55%; bottom: 3.5rem; transform: scaleX(-1) rotateY(540deg); }
+  40% { left: 45%; bottom: 7.0rem; transform: scaleX(-1) rotateY(180deg); }
+  48% { left: 55%; bottom: 7.0rem; transform: scaleX(-1) rotateY(540deg); }
   
   /* Land */
-  60% { left: 70%; bottom: 0.8rem; transform: scaleX(-1); }
-  70% { left: 75%; bottom: 0.5rem; transform: scaleX(-1) skewX(10deg); }
-  100% { left: 95%; bottom: 0.8rem; transform: scaleX(-1); }
+  60% { left: 70%; bottom: 1.6rem; transform: scaleX(-1); }
+  70% { left: 75%; bottom: 1.0rem; transform: scaleX(-1) skewX(10deg); }
+  100% { left: 95%; bottom: 1.6rem; transform: scaleX(-1); }
 }
 
 /* 2b. FLIP: Standard timing, distinct vault */
@@ -970,19 +970,19 @@ a {
 }
 
 @keyframes anim-flip {
-  0% { left: 5%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
-  30% { left: 35%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
+  0% { left: 5%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
+  30% { left: 35%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
   
   /* Vault: Dip then pick */
-  33% { left: 38%; bottom: 0.6rem; transform: scaleX(-1) rotateZ(15deg); } 
+  33% { left: 38%; bottom: 1.2rem; transform: scaleX(-1) rotateZ(15deg); } 
   
   /* Jump High */
-  40% { left: 45%; bottom: 4.0rem; transform: scaleX(-1) rotateY(180deg); }
-  50% { left: 58%; bottom: 4.0rem; transform: scaleX(-1) rotateY(720deg); }
+  40% { left: 45%; bottom: 8.0rem; transform: scaleX(-1) rotateY(180deg); }
+  50% { left: 58%; bottom: 8.0rem; transform: scaleX(-1) rotateY(720deg); }
   
-  60% { left: 70%; bottom: 0.8rem; transform: scaleX(-1); }
-  70% { left: 75%; bottom: 0.5rem; transform: scaleX(-1) skewX(10deg); }
-  100% { left: 95%; bottom: 0.8rem; transform: scaleX(-1); }
+  60% { left: 70%; bottom: 1.6rem; transform: scaleX(-1); }
+  70% { left: 75%; bottom: 1.0rem; transform: scaleX(-1) skewX(10deg); }
+  100% { left: 95%; bottom: 1.6rem; transform: scaleX(-1); }
 }
 
 /* 2c. LUTZ: Long glide, delayed pick, counter-rotation feel */
@@ -991,20 +991,20 @@ a {
 }
 
 @keyframes anim-lutz {
-  0% { left: 0%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
+  0% { left: 0%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
   /* LONG GLIDE PHASE */
-  40% { left: 40%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
+  40% { left: 40%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
   
   /* Deep edge lean before pick */
-  45% { left: 45%; bottom: 0.5rem; transform: scaleX(-1) rotateZ(20deg); } 
+  45% { left: 45%; bottom: 1.0rem; transform: scaleX(-1) rotateZ(20deg); } 
   
   /* Explosive Launch */
-  50% { left: 50%; bottom: 4.2rem; transform: scaleX(-1) rotateY(180deg); }
-  60% { left: 62%; bottom: 4.2rem; transform: scaleX(-1) rotateY(720deg); }
+  50% { left: 50%; bottom: 8.4rem; transform: scaleX(-1) rotateY(180deg); }
+  60% { left: 62%; bottom: 8.4rem; transform: scaleX(-1) rotateY(720deg); }
   
-  70% { left: 75%; bottom: 0.8rem; transform: scaleX(-1); }
-  80% { left: 80%; bottom: 0.5rem; transform: scaleX(-1) skewX(10deg); }
-  100% { left: 100%; bottom: 0.8rem; transform: scaleX(-1); }
+  70% { left: 75%; bottom: 1.6rem; transform: scaleX(-1); }
+  80% { left: 80%; bottom: 1.0rem; transform: scaleX(-1) skewX(10deg); }
+  100% { left: 100%; bottom: 1.6rem; transform: scaleX(-1); }
 }
 
 
@@ -1017,19 +1017,19 @@ a {
 }
 
 @keyframes anim-salchow {
-  0% { left: 5%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
-  25% { left: 30%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
+  0% { left: 5%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
+  25% { left: 30%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
   
   /* SCOOP: Deep knee bend + Wide swing (simulated by wider scale temporarily) */
-  35% { left: 40%; bottom: 0.3rem; transform: scaleX(-1) scaleY(0.8); }
+  35% { left: 40%; bottom: 0.6rem; transform: scaleX(-1) scaleY(0.8); }
   
   /* Launch - Sweeping up */
-  40% { left: 45%; bottom: 3.5rem; transform: scaleX(-1) rotateY(180deg); }
-  50% { left: 55%; bottom: 3.5rem; transform: scaleX(-1) rotateY(540deg); }
+  40% { left: 45%; bottom: 7.0rem; transform: scaleX(-1) rotateY(180deg); }
+  50% { left: 55%; bottom: 7.0rem; transform: scaleX(-1) rotateY(540deg); }
   
-  60% { left: 70%; bottom: 0.8rem; transform: scaleX(-1); }
-  70% { left: 75%; bottom: 0.5rem; transform: scaleX(-1) skewX(10deg); }
-  100% { left: 95%; bottom: 0.8rem; transform: scaleX(-1); }
+  60% { left: 70%; bottom: 1.6rem; transform: scaleX(-1); }
+  70% { left: 75%; bottom: 1.0rem; transform: scaleX(-1) skewX(10deg); }
+  100% { left: 95%; bottom: 1.6rem; transform: scaleX(-1); }
 }
 
 /* 3b. RITTBERGER (LOOP): Compact, crossed legs, tight rotation */
@@ -1038,19 +1038,19 @@ a {
 }
 
 @keyframes anim-rittberger {
-  0% { left: 5%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
-  25% { left: 30%; bottom: 0.8rem; transform: scaleX(-1) rotateY(0deg); }
+  0% { left: 5%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
+  25% { left: 30%; bottom: 1.6rem; transform: scaleX(-1) rotateY(0deg); }
   
   /* COMPACT PREP: Less deep squat, more "sitting" */
-  35% { left: 38%; bottom: 0.6rem; transform: scaleX(-1) scaleY(0.9) scaleX(0.8); }
+  35% { left: 38%; bottom: 1.2rem; transform: scaleX(-1) scaleY(0.9) scaleX(0.8); }
   
   /* TIGHT SPIN: Keeps narrow width */
-  40% { left: 45%; bottom: 3.5rem; transform: scaleX(-1) rotateY(180deg) scaleX(0.8); }
-  50% { left: 55%; bottom: 3.5rem; transform: scaleX(-1) rotateY(720deg) scaleX(0.8); }
+  40% { left: 45%; bottom: 7.0rem; transform: scaleX(-1) rotateY(180deg) scaleX(0.8); }
+  50% { left: 55%; bottom: 7.0rem; transform: scaleX(-1) rotateY(720deg) scaleX(0.8); }
   
-  60% { left: 70%; bottom: 0.8rem; transform: scaleX(-1); }
-  70% { left: 75%; bottom: 0.5rem; transform: scaleX(-1) skewX(10deg); }
-  100% { left: 95%; bottom: 0.8rem; transform: scaleX(-1); }
+  60% { left: 70%; bottom: 1.6rem; transform: scaleX(-1); }
+  70% { left: 75%; bottom: 1.0rem; transform: scaleX(-1) skewX(10deg); }
+  100% { left: 95%; bottom: 1.6rem; transform: scaleX(-1); }
 }
 
 /* Different visual cues for specific jumps can be added if we can distinct visuals */
@@ -1636,7 +1636,7 @@ tbody tr:hover {
             <text x="110" y="108" text-anchor="middle" font-size="10" fill="#666">PÍCHNUTÍ ŠPIČKOU</text>
           </svg>
         </div>
-        <div class="takeoff-demo toe" aria-hidden="true">
+        <div class="takeoff-demo toe toeloop" aria-hidden="true">
           <span class="takeoff-label">Odraz přes špičku</span>
           <div class="takeoff-stage">
             <!-- TOE: Sharp Tap Point -->
@@ -1685,7 +1685,7 @@ tbody tr:hover {
             <text x="90" y="105" text-anchor="middle" font-size="10" fill="#666">HLUBOKÉ KOLENO</text>
           </svg>
         </div>
-        <div class="takeoff-demo edge" aria-hidden="true">
+        <div class="takeoff-demo edge salchow" aria-hidden="true">
           <span class="takeoff-label">Plynulý odraz z hrany</span>
           <div class="takeoff-stage">
             <!-- EDGE: Deep Scoop/Knee Bend -->
@@ -1735,7 +1735,7 @@ tbody tr:hover {
             <text x="100" y="105" text-anchor="middle" font-size="10" fill="#666">SEVŘENÝ ODRAZ</text>
           </svg>
         </div>
-        <div class="takeoff-demo edge" aria-hidden="true">
+        <div class="takeoff-demo edge rittberger" aria-hidden="true">
           <span class="takeoff-label">Sevřený odraz z hrany</span>
           <div class="takeoff-stage">
             <!-- EDGE: Deep Scoop/Knee Bend -->
@@ -1785,7 +1785,7 @@ tbody tr:hover {
             <text x="100" y="108" text-anchor="middle" font-size="10" fill="#666">RYCHLÉ PÍCHNUTÍ</text>
           </svg>
         </div>
-        <div class="takeoff-demo toe" aria-hidden="true">
+        <div class="takeoff-demo toe flip" aria-hidden="true">
           <span class="takeoff-label">Krátké píchnutí špičkou</span>
           <div class="takeoff-stage">
             <!-- TOE: Sharp Tap Point -->
@@ -1835,7 +1835,7 @@ tbody tr:hover {
             <text x="130" y="108" text-anchor="middle" font-size="10" fill="#666">...A ŠPIČKA</text>
           </svg>
         </div>
-        <div class="takeoff-demo toe" aria-hidden="true">
+        <div class="takeoff-demo toe lutz" aria-hidden="true">
           <span class="takeoff-label">Dlouhý náběh a špička</span>
           <div class="takeoff-stage">
             <!-- TOE: Sharp Tap Point -->
