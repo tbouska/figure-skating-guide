@@ -820,48 +820,108 @@ a {
 .tr.in { stroke: #4a90e2; }
 .tr.fly { stroke: #9db4c5; stroke-width: 3; stroke-dasharray: 7 8; }
 .tr.thin { stroke-width: 2.5; opacity: 0.85; }
-.tr.swing { stroke: #4a90e2; stroke-width: 2; stroke-dasharray: 3 5; opacity: 0.85; }
+.tr.swing { stroke: #00695c; stroke-width: 2; stroke-dasharray: 3 5; opacity: 0.85; }
+.tr.ghost { opacity: 0.3; }
+
+.tr.draw {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+}
+
+.entry-draw { animation: draw-med 6s linear infinite; }
+.jv-axel .entry-draw,
+.jv-lutz .entry-draw { animation-name: draw-long; }
+.jv-toeloop .entry-draw { animation-name: draw-short; }
+.exit-draw { animation: draw-exit 6s linear infinite; }
+
+@keyframes draw-med {
+  0% { stroke-dashoffset: 100; }
+  40%, 100% { stroke-dashoffset: 0; }
+}
+
+@keyframes draw-long {
+  0% { stroke-dashoffset: 100; }
+  44%, 100% { stroke-dashoffset: 0; }
+}
+
+@keyframes draw-short {
+  0% { stroke-dashoffset: 100; }
+  33%, 100% { stroke-dashoffset: 0; }
+}
+
+@keyframes draw-exit {
+  0%, 72% { stroke-dashoffset: 100; animation-timing-function: cubic-bezier(0.25, 0.6, 0.45, 1); }
+  100% { stroke-dashoffset: 0; }
+}
+
+.leg-dot.a { fill: #d81b60; }
+.leg-dot.b { fill: #00695c; }
 
 .tr-label { font-size: 11px; font-weight: 700; fill: var(--text-soft); }
 .tr-label.dir { font-size: 12px; font-weight: 800; fill: var(--text); letter-spacing: 0.04em; }
-.tr-foot { font-size: 13px; font-weight: 900; fill: var(--primary-deep); }
 .tr-note { font-size: 10px; fill: var(--text-faint); }
 .rot-glyph { fill: none; stroke: var(--text-soft); stroke-width: 2; }
 
 .pick-star {
   font-size: 17px;
-  fill: #e94e77;
+  fill: #00695c;
   transform-box: fill-box;
   transform-origin: center;
   animation: star-pulse 6s ease-in-out infinite;
 }
+
+.jv-toeloop .pick-star { animation-delay: -0.42s; }
+.jv-lutz .pick-star { animation-delay: 0.24s; }
 
 @keyframes star-pulse {
   0%, 28%, 48%, 100% { transform: scale(1); opacity: 0.75; }
   38% { transform: scale(1.7); opacity: 1; }
 }
 
-.trace-dot {
+/* bruslar na mape: kapka = spicka brusle, nos ukazuje, kam se kouka */
+.trace-marker {
   opacity: 0;
 }
 
-@supports (offset-path: path("M0 0 L1 1")) {
-  .trace-dot {
-    opacity: 1;
-    animation: dot-travel 6s linear infinite;
-  }
-
-  .jv-axel .trace-dot { offset-path: path("M20,122 Q105,112 180,75 L300,60 Q352,46 386,26"); }
-  .jv-toeloop .trace-dot { offset-path: path("M75,108 Q135,98 180,75 L300,60 Q352,46 386,26"); }
-  .jv-salchow .trace-dot { offset-path: path("M28,126 Q110,112 180,75 L300,60 Q352,46 386,26"); }
-  .jv-rittberger .trace-dot { offset-path: path("M62,122 Q145,112 180,75 L300,60 Q352,46 386,26"); }
-  .jv-flip .trace-dot { offset-path: path("M45,118 Q118,105 180,75 L300,60 Q352,46 386,26"); }
-  .jv-lutz .trace-dot { offset-path: path("M12,48 Q120,92 180,75 L300,60 Q352,46 386,26"); }
+.marker-nose {
+  fill: #17324d;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: marker-spin-1 6s linear infinite;
 }
 
-@keyframes dot-travel {
-  from { offset-distance: 0%; }
-  to { offset-distance: 100%; }
+.jv-axel .marker-nose { animation-name: marker-spin-15; }
+
+@supports (offset-path: path("M0 0 L1 1")) {
+  .trace-marker {
+    opacity: 1;
+    offset-rotate: auto 180deg;
+    animation: marker-travel 6s linear infinite;
+  }
+
+  .jv-axel .trace-marker { offset-rotate: auto; offset-path: path("M20,122 Q105,112 180,75 L300,60 Q352,46 386,26"); }
+  .jv-toeloop .trace-marker { offset-path: path("M75,108 Q135,98 180,75 L300,60 Q352,46 386,26"); }
+  .jv-salchow .trace-marker { offset-path: path("M28,126 Q110,112 180,75 L300,60 Q352,46 386,26"); }
+  .jv-rittberger .trace-marker { offset-path: path("M62,122 Q145,112 180,75 L300,60 Q352,46 386,26"); }
+  .jv-flip .trace-marker { offset-path: path("M45,118 Q118,105 180,75 L300,60 Q352,46 386,26"); }
+  .jv-lutz .trace-marker { offset-path: path("M12,48 Q120,92 180,75 L300,60 Q352,46 386,26"); }
+}
+
+@keyframes marker-travel {
+  0% { offset-distance: 0%; }
+  72% { offset-distance: 72%; animation-timing-function: cubic-bezier(0.25, 0.6, 0.45, 1); }
+  100% { offset-distance: 100%; }
+}
+
+/* rotace ve vzduchu: proti smeru hodinovych rucicek (tocime doleva) */
+@keyframes marker-spin-1 {
+  0%, 46% { rotate: 0deg; }
+  66%, 100% { rotate: -360deg; }
+}
+
+@keyframes marker-spin-15 {
+  0%, 46% { rotate: 0deg; }
+  66%, 100% { rotate: -540deg; }
 }
 
 .trace-legend {
@@ -891,12 +951,25 @@ a {
 .trace-legend .sw.out { border-color: var(--secondary); }
 .trace-legend .sw.in { border-color: #4a90e2; }
 .trace-legend .sw.fly { border-top-style: dashed; border-top-width: 3px; border-color: #9db4c5; }
-.trace-legend .star { color: #e94e77; margin-right: 0.2rem; }
+.trace-legend .star { color: #00695c; margin-right: 0.2rem; }
+
+.trace-legend .dot {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.3rem;
+}
+
+.trace-legend .dot.a { background: #d81b60; }
+.trace-legend .dot.b { background: #00695c; }
 
 /* side profile stage */
 .side-stage {
   position: relative;
-  height: 8rem;
+  height: 9rem;
+  container-type: size;
   background: linear-gradient(180deg, #f0faff, #e0f4ff);
   border-bottom: 4px solid #bfe7f6;
   overflow: hidden;
@@ -919,78 +992,177 @@ a {
   position: absolute;
   left: 30%;
   bottom: 0.4rem;
-  color: #e94e77;
+  color: #00695c;
   font-size: 1.2rem;
   opacity: 0;
   animation: side-pick-flash 5s linear infinite;
 }
 
 @keyframes side-pick-flash {
-  0%, 23%, 36%, 100% { opacity: 0; transform: scale(0.6); }
-  27% { opacity: 1; transform: scale(1.5); }
-  32% { opacity: 1; transform: scale(1); }
+  0%, 27%, 37%, 100% { opacity: 0; transform: scale(0.6); }
+  30% { opacity: 1; transform: scale(1.5); }
+  34% { opacity: 1; transform: scale(1); }
+}
+
+.side-puff {
+  position: absolute;
+  left: 60%;
+  bottom: 0.3rem;
+  width: 1.8rem;
+  height: 1.1rem;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 25% 70%, rgba(255, 255, 255, 0.95) 22%, transparent 24%),
+    radial-gradient(circle at 55% 40%, rgba(224, 244, 255, 0.95) 26%, transparent 28%),
+    radial-gradient(circle at 80% 75%, rgba(255, 255, 255, 0.9) 20%, transparent 22%);
+  animation: side-puff-pop 5s linear infinite;
+}
+
+@keyframes side-puff-pop {
+  0%, 54% { opacity: 0; scale: 0.3; }
+  57% { opacity: 0.95; scale: 0.8; }
+  64% { opacity: 0; scale: 1.5; }
+  100% { opacity: 0; scale: 0.3; }
 }
 
 .side-skater {
   position: absolute;
-  left: 2%;
+  left: 1%;
   bottom: 0.4rem;
   width: 2.9rem;
   height: 4.4rem;
+  animation: side-x 5s linear infinite;
+}
+
+.side-skater::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.2rem;
+  width: 2rem;
+  height: 0.4rem;
+  margin-left: -1rem;
+  border-radius: 50%;
+  background: rgba(15, 73, 112, 0.16);
+  animation: side-shadow 5s linear infinite;
+}
+
+.side-hop {
+  width: 100%;
+  height: 100%;
+  animation: hop-std 5s linear infinite;
+}
+
+.side-pose {
+  width: 100%;
+  height: 100%;
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: contain;
-  --pose-glide-bwd: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke='%2317324D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='8' cy='5' r='3.1' fill='%2317324D' stroke='none'/><path d='M8.5 8.5 L10 20'/><path d='M10 20 L10 31'/><path d='M6.5 32.5 L13 32.5' stroke='%230F9EC7' stroke-width='2'/><path d='M10 20 L17 25.5'/><path d='M9 12 L3 16.5'/><path d='M9 12 L16.5 13.5'/></svg>");
-  --pose-glide-fwd: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke='%2317324D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='16' cy='5' r='3.1' fill='%2317324D' stroke='none'/><path d='M15.5 8.5 L14 20'/><path d='M14 20 L14 31'/><path d='M11 32.5 L17.5 32.5' stroke='%230F9EC7' stroke-width='2'/><path d='M14 20 L7 25.5'/><path d='M15 12 L21 16.5'/><path d='M15 12 L7.5 13.5'/></svg>");
-  --pose-toe-tap: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke='%2317324D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='7' cy='6' r='3.1' fill='%2317324D' stroke='none'/><path d='M7.5 9.5 L9.5 21'/><path d='M9.5 21 L8.5 31'/><path d='M5.5 32.5 L11.5 32.5' stroke='%230F9EC7' stroke-width='2'/><path d='M9.5 21 L17.5 28 L18.5 33.5'/><path d='M8.5 13 L2.5 18'/><path d='M8.5 13 L15.5 15'/></svg>");
-  --pose-air: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke='%2317324D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='4.5' r='3' fill='%2317324D' stroke='none'/><path d='M12 8 L12 21.5'/><path d='M12 21.5 L12 32'/><path d='M8.5 11 L15.5 11'/><path d='M4.5 17 C3 13 6 9.5 9.5 9.5' stroke='%23E94E77' stroke-width='1.7'/><path d='M9.5 9.5 L7.4 8.6 M9.5 9.5 L8.8 11.7' stroke='%23E94E77' stroke-width='1.7'/><path d='M19.5 19 C21 23 18 26.5 14.5 26.5' stroke='%23E94E77' stroke-width='1.7'/><path d='M14.5 26.5 L16.6 27.4 M14.5 26.5 L15.2 24.3' stroke='%23E94E77' stroke-width='1.7'/></svg>");
-  --pose-landing: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke='%2317324D' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='8' cy='6' r='3.1' fill='%2317324D' stroke='none'/><path d='M8.5 9.5 L10 21'/><path d='M10 21 L10 31'/><path d='M6.5 32.5 L13 32.5' stroke='%230F9EC7' stroke-width='2'/><path d='M10 21 L21.5 16'/><path d='M9 12 L2 14.5'/><path d='M9 12 L16 9.5'/></svg>");
-  background-image: var(--pose-glide-bwd);
+  --pose-glide-fwd-a: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='16' cy='5' r='3.1' fill='%2317324D'/><path d='M15.5 8.5 L14 20' stroke='%2317324D'/><path d='M15 12 L21 16.5' stroke='%2317324D'/><path d='M15 12 L7.5 13.5' stroke='%2317324D'/><path d='M14 20 L14 31' stroke='%23D81B60'/><path d='M11 32.5 L17.5 32.5' stroke='%23D81B60' stroke-width='2'/><path d='M14 20 L7 25.5 L4 26.5' stroke='%2300695C'/></svg>");
+  --pose-glide-bwd-a: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='8' cy='5' r='3.1' fill='%2317324D'/><path d='M8.5 8.5 L10 20' stroke='%2317324D'/><path d='M9 12 L3 16.5' stroke='%2317324D'/><path d='M9 12 L16.5 13.5' stroke='%2317324D'/><path d='M10 20 L10 31' stroke='%23D81B60'/><path d='M6.5 32.5 L13 32.5' stroke='%23D81B60' stroke-width='2'/><path d='M10 20 L17 25.5 L20 26.5' stroke='%2300695C'/></svg>");
+  --pose-glide-bwd-b: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='8' cy='5' r='3.1' fill='%2317324D'/><path d='M8.5 8.5 L10 20' stroke='%2317324D'/><path d='M9 12 L3 16.5' stroke='%2317324D'/><path d='M9 12 L16.5 13.5' stroke='%2317324D'/><path d='M10 20 L10 31' stroke='%2300695C'/><path d='M6.5 32.5 L13 32.5' stroke='%2300695C' stroke-width='2'/><path d='M10 20 L17 25.5 L20 26.5' stroke='%23D81B60'/></svg>");
+  --pose-tap: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='7' cy='6' r='3.1' fill='%2317324D'/><path d='M7.5 9.5 L9.5 21' stroke='%2317324D'/><path d='M8.5 13 L2.5 18' stroke='%2317324D'/><path d='M8.5 13 L15.5 15' stroke='%2317324D'/><path d='M9.5 21 L8.5 31' stroke='%23D81B60'/><path d='M5.5 32.5 L11.5 32.5' stroke='%23D81B60' stroke-width='2'/><path d='M9.5 21 L17.5 28 L18.5 33.5' stroke='%2300695C'/></svg>");
+  --pose-air: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='4.5' r='3' fill='%2317324D'/><path d='M12 8 L12 20' stroke='%2317324D'/><path d='M8.5 10.5 L15.5 10.5' stroke='%2317324D'/><path d='M9 13.5 L15 13.5' stroke='%2317324D'/><path d='M12 20 L12 33' stroke='%23D81B60'/><path d='M9.5 33.5 L14.5 33.5' stroke='%23D81B60' stroke-width='2'/><path d='M12 20 L8 25.5 L10.5 30.5' stroke='%2300695C'/></svg>");
+  --pose-land-a: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='8' cy='6' r='3.1' fill='%2317324D'/><path d='M8.5 9.5 L10.5 21' stroke='%2317324D'/><path d='M9 12 L1.5 14' stroke='%2317324D'/><path d='M9 12 L16 8.5' stroke='%2317324D'/><path d='M10.5 21 L9 26.5 L10 32' stroke='%23D81B60'/><path d='M6.5 33 L13 33' stroke='%23D81B60' stroke-width='2'/><path d='M10.5 21 L21.5 15.5 L23.5 16.5' stroke='%2300695C'/></svg>");
+  --pose-land-b: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 36' fill='none' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='8' cy='6' r='3.1' fill='%2317324D'/><path d='M8.5 9.5 L10.5 21' stroke='%2317324D'/><path d='M9 12 L1.5 14' stroke='%2317324D'/><path d='M9 12 L16 8.5' stroke='%2317324D'/><path d='M10.5 21 L9 26.5 L10 32' stroke='%2300695C'/><path d='M6.5 33 L13 33' stroke='%2300695C' stroke-width='2'/><path d='M10.5 21 L21.5 15.5 L23.5 16.5' stroke='%23D81B60'/></svg>");
+  background-image: var(--pose-glide-bwd-a);
 }
 
-.jv-axel .side-skater { background-image: var(--pose-glide-fwd); animation: side-fwd 5.5s linear infinite; }
-.jv-salchow .side-skater,
-.jv-rittberger .side-skater { animation: side-edge 5s linear infinite; }
-.jv-toeloop .side-skater,
-.jv-flip .side-skater,
-.jv-lutz .side-skater { animation: side-toe 5s linear infinite; }
+.jv-axel .side-pose { background-image: var(--pose-glide-fwd-a); animation: pose-fwd 5s linear infinite; }
+.jv-salchow .side-pose,
+.jv-rittberger .side-pose { animation: pose-edge 5s linear infinite; }
+.jv-toeloop .side-pose,
+.jv-flip .side-pose,
+.jv-lutz .side-pose { animation: pose-toe 5s linear infinite; }
 
-/* hranove skoky: skluz vzad -> odraz z hrany -> rotace -> dopad vzad */
-@keyframes side-edge {
-  0% { left: 2%; bottom: 0.4rem; background-image: var(--pose-glide-bwd); }
-  28% { left: 30%; bottom: 0.1rem; background-image: var(--pose-glide-bwd); }
-  34% { left: 37%; bottom: 1.9rem; background-image: var(--pose-air); }
-  46% { left: 48%; bottom: 3.4rem; background-image: var(--pose-air); }
-  57% { left: 58%; bottom: 1.1rem; background-image: var(--pose-air); }
-  62% { left: 62%; bottom: 0.4rem; background-image: var(--pose-landing); }
-  84% { left: 80%; bottom: 0.4rem; background-image: var(--pose-landing); }
-  100% { left: 96%; bottom: 0.4rem; background-image: var(--pose-glide-bwd); }
+/* dopad: stejna noha (a) u toeloopu a rittbergeru, druha noha (b) jinak */
+.jv-axel .side-pose,
+.jv-salchow .side-pose,
+.jv-flip .side-pose,
+.jv-lutz .side-pose { --pose-land: var(--pose-land-b); --pose-exit: var(--pose-glide-bwd-b); }
+.jv-toeloop .side-pose,
+.jv-rittberger .side-pose { --pose-land: var(--pose-land-a); --pose-exit: var(--pose-glide-bwd-a); }
+
+.jv-axel .side-hop { animation-name: hop-axel; }
+
+/* vodorovny pohyb: linearni, po dopadu lehce zpomali (treni) */
+@keyframes side-x {
+  0% { translate: 0 0; }
+  58% { translate: 56cqw 0; animation-timing-function: cubic-bezier(0.25, 0.6, 0.45, 1); }
+  100% { translate: 86cqw 0; }
 }
 
-/* spickove skoky: skluz vzad -> pichnuti spickou -> rotace -> dopad vzad */
-@keyframes side-toe {
-  0% { left: 2%; bottom: 0.4rem; background-image: var(--pose-glide-bwd); }
-  22% { left: 25%; bottom: 0.4rem; background-image: var(--pose-glide-bwd); }
-  26% { left: 28%; bottom: 0.1rem; background-image: var(--pose-toe-tap); }
-  32% { left: 32%; bottom: 0.1rem; background-image: var(--pose-toe-tap); }
-  37% { left: 38%; bottom: 2rem; background-image: var(--pose-air); }
-  47% { left: 48%; bottom: 3.4rem; background-image: var(--pose-air); }
-  57% { left: 58%; bottom: 1.1rem; background-image: var(--pose-air); }
-  62% { left: 62%; bottom: 0.4rem; background-image: var(--pose-landing); }
-  84% { left: 80%; bottom: 0.4rem; background-image: var(--pose-landing); }
-  100% { left: 96%; bottom: 0.4rem; background-image: var(--pose-glide-bwd); }
+/* svisly pohyb: pokrceni, vyskok s ease-out, dopad s ease-in, pruzeni */
+@keyframes hop-std {
+  0%, 30% { translate: 0 0; }
+  33% { translate: 0 0.35rem; animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1); }
+  45% { translate: 0 -3.3rem; animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0); }
+  55% { translate: 0 0.3rem; animation-timing-function: ease-out; }
+  58% { translate: 0 0; }
+  100% { translate: 0 0; }
 }
 
-/* axel: jediny jede do odrazu vpred a ma o pul otocky vic */
-@keyframes side-fwd {
-  0% { left: 2%; bottom: 0.4rem; background-image: var(--pose-glide-fwd); }
-  26% { left: 28%; bottom: 0.1rem; background-image: var(--pose-glide-fwd); }
-  32% { left: 35%; bottom: 2.2rem; background-image: var(--pose-air); }
-  45% { left: 47%; bottom: 3.8rem; background-image: var(--pose-air); }
-  60% { left: 60%; bottom: 1.2rem; background-image: var(--pose-air); }
-  66% { left: 64%; bottom: 0.4rem; background-image: var(--pose-landing); }
-  86% { left: 82%; bottom: 0.4rem; background-image: var(--pose-landing); }
-  100% { left: 96%; bottom: 0.4rem; background-image: var(--pose-glide-bwd); }
+@keyframes hop-axel {
+  0%, 29% { translate: 0 0; }
+  31% { translate: 0 0.35rem; animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1); }
+  44% { translate: 0 -3.8rem; animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0); }
+  57% { translate: 0 0.3rem; animation-timing-function: ease-out; }
+  60% { translate: 0 0; }
+  100% { translate: 0 0; }
+}
+
+/* rotace ve vzduchu: rychle prevraceni scaleX = stroboskopicka otocka */
+@keyframes pose-edge {
+  0% { background-image: var(--pose-glide-bwd-a); transform: scaleX(1); }
+  34.9% { background-image: var(--pose-glide-bwd-a); transform: scaleX(1); }
+  35% { background-image: var(--pose-air); transform: scaleX(1); }
+  40% { transform: scaleX(0); }
+  45% { transform: scaleX(-1); }
+  50% { transform: scaleX(0); }
+  54.9% { background-image: var(--pose-air); transform: scaleX(1); }
+  55% { background-image: var(--pose-land); transform: scaleX(1); }
+  74.9% { background-image: var(--pose-land); }
+  75% { background-image: var(--pose-exit); }
+  100% { background-image: var(--pose-exit); transform: scaleX(1); }
+}
+
+@keyframes pose-toe {
+  0% { background-image: var(--pose-glide-bwd-a); transform: scaleX(1); }
+  29.4% { background-image: var(--pose-glide-bwd-a); transform: scaleX(1); }
+  29.5% { background-image: var(--pose-tap); }
+  34.9% { background-image: var(--pose-tap); transform: scaleX(1); }
+  35% { background-image: var(--pose-air); transform: scaleX(1); }
+  40% { transform: scaleX(0); }
+  45% { transform: scaleX(-1); }
+  50% { transform: scaleX(0); }
+  54.9% { background-image: var(--pose-air); transform: scaleX(1); }
+  55% { background-image: var(--pose-land); transform: scaleX(1); }
+  74.9% { background-image: var(--pose-land); }
+  75% { background-image: var(--pose-exit); }
+  100% { background-image: var(--pose-exit); transform: scaleX(1); }
+}
+
+@keyframes pose-fwd {
+  0% { background-image: var(--pose-glide-fwd-a); transform: scaleX(1); }
+  32.9% { background-image: var(--pose-glide-fwd-a); transform: scaleX(1); }
+  33% { background-image: var(--pose-air); transform: scaleX(1); }
+  39% { transform: scaleX(0); }
+  45% { transform: scaleX(-1); }
+  51% { transform: scaleX(0); }
+  56.9% { background-image: var(--pose-air); transform: scaleX(1); }
+  57% { background-image: var(--pose-land); transform: scaleX(1); }
+  76.9% { background-image: var(--pose-land); }
+  77% { background-image: var(--pose-exit); }
+  100% { background-image: var(--pose-exit); transform: scaleX(1); }
+}
+
+/* stin: ve vzduchu se zmensi a zeslabne */
+@keyframes side-shadow {
+  0%, 32% { scale: 1; opacity: 1; }
+  45% { scale: 0.45; opacity: 0.4; }
+  56% { scale: 1.1; opacity: 1; }
+  60%, 100% { scale: 1; opacity: 1; }
 }
 
 .tag-row {
@@ -1462,12 +1634,15 @@ tbody tr:hover {
       <span><i class="sw in"></i>vnitřní hrana</span>
       <span><i class="sw fly"></i>let vzduchem</span>
       <span><span class="star">✦</span>píchnutí špičkou</span>
-      <span><strong>L / P</strong>&nbsp;= levá / pravá noha</span>
+      <span><span class="dot a"></span><span class="dot b"></span>nohy: stejná barva = stejná noha</span>
     </div>
     <p class="small-note">
-      Nákresy platí pro bruslaře, který se točí doleva (většina). Všechny
-      skoky se dopadají stejně: vzad na pravou nohu na vnější hranu. Proto se
-      skok pozná podle odrazu, ne podle dopadu.
+      Čáry ukazují hranu brusle, barevné tečky nohy: sleduj, ze které nohy se
+      skáče a na kterou se dopadá – nezáleží na tom, jestli je to levá, nebo
+      pravá. Stejné barvy mají i nohy panáčka v bočním pohledu. Nákresy jsou
+      pro bruslaře točícího doleva; kdo se točí doprava, má vše zrcadlově.
+      Všechny skoky se dopadají stejně: vzad na vnější hranu. Proto se skok
+      pozná podle odrazu, ne podle dopadu.
     </p>
     <div class="details-grid">
       <article class="detail-card">
@@ -1489,26 +1664,27 @@ tbody tr:hover {
           <figure class="view-top">
             <figcaption>Shora: stopa na ledě</figcaption>
             <svg viewBox="0 0 420 150">
-              <path class="tr out" d="M20,122 Q105,112 180,75"/>
+              <path class="tr ghost out" d="M20,122 Q105,112 180,75"/>
               <path class="tr fly" d="M180,75 L300,60"/>
-              <path class="tr out" d="M300,60 Q352,46 386,26"/>
-              <circle cx="180" cy="75" r="5" fill="#ffb347"/>
-              <circle cx="300" cy="60" r="5" fill="#ffb347"/>
+              <path class="tr ghost out" d="M300,60 Q352,46 386,26"/>
+              <path class="tr draw out entry-draw" d="M20,122 Q105,112 180,75" pathLength="100"/>
+              <path class="tr draw out exit-draw" d="M300,60 Q352,46 386,26" pathLength="100"/>
+              <circle class="leg-dot a" cx="180" cy="75" r="5.5"/>
+              <circle class="leg-dot b" cx="300" cy="60" r="5.5"/>
               <text class="tr-label dir" x="16" y="141">VPŘED</text>
-              <text class="tr-foot" x="6" y="120">L</text>
-              <text class="tr-foot" x="294" y="83">P</text>
               <text class="tr-note" x="282" y="97">dopad vzad</text>
-              <path class="rot-glyph" d="M228,50 a11,9 0 1 1 8,13"/>
-              <path class="rot-glyph" d="M236,63 l-5.5,0.5 M236,63 l-1,-5"/>
+              <path class="rot-glyph" d="M236,50 a11,9 0 1 0 -8,13"/>
+              <path class="rot-glyph" d="M228,63 l5.5,0.5 M228,63 l1,-5"/>
               <text class="tr-label" x="212" y="33">1½ otáčky</text>
-              <circle class="trace-dot" r="6" fill="#17324d"/>
+              <g class="trace-marker"><path class="marker-nose" d="M7,0 C3,3.6 -5,2.6 -5,0 C-5,-2.6 3,-3.6 7,0"/></g>
             </svg>
           </figure>
           <figure class="view-side">
             <figcaption>Z boku: výška a rotace</figcaption>
             <div class="side-stage">
               <span class="side-tag">vpřed · 1½ otáčky</span>
-              <div class="side-skater"></div>
+              <span class="side-puff"></span>
+              <div class="side-skater"><div class="side-hop"><div class="side-pose"></div></div></div>
             </div>
           </figure>
         </div>
@@ -1546,21 +1722,21 @@ tbody tr:hover {
           <figure class="view-top">
             <figcaption>Shora: stopa na ledě</figcaption>
             <svg viewBox="0 0 420 150">
-              <path class="tr out" d="M75,108 Q135,98 180,75"/>
+              <path class="tr ghost out" d="M75,108 Q135,98 180,75"/>
               <path class="tr fly" d="M180,75 L300,60"/>
-              <path class="tr out" d="M300,60 Q352,46 386,26"/>
-              <circle cx="180" cy="75" r="5" fill="#ffb347"/>
-              <circle cx="300" cy="60" r="5" fill="#ffb347"/>
+              <path class="tr ghost out" d="M300,60 Q352,46 386,26"/>
+              <path class="tr draw out entry-draw" d="M75,108 Q135,98 180,75" pathLength="100"/>
+              <path class="tr draw out exit-draw" d="M300,60 Q352,46 386,26" pathLength="100"/>
+              <circle class="leg-dot a" cx="180" cy="75" r="5.5"/>
+              <circle class="leg-dot a" cx="300" cy="60" r="5.5"/>
               <text class="pick-star" x="152" y="99">✦</text>
-              <text class="tr-note" x="118" y="115">špička L</text>
+              <text class="tr-note" x="126" y="115">špička</text>
               <text class="tr-label dir" x="64" y="128">VZAD</text>
-              <text class="tr-foot" x="58" y="104">P</text>
-              <text class="tr-foot" x="294" y="83">P</text>
               <text class="tr-note" x="282" y="97">dopad vzad</text>
-              <path class="rot-glyph" d="M228,50 a11,9 0 1 1 8,13"/>
-              <path class="rot-glyph" d="M236,63 l-5.5,0.5 M236,63 l-1,-5"/>
+              <path class="rot-glyph" d="M236,50 a11,9 0 1 0 -8,13"/>
+              <path class="rot-glyph" d="M228,63 l5.5,0.5 M228,63 l1,-5"/>
               <text class="tr-label" x="214" y="33">1 otáčka</text>
-              <circle class="trace-dot" r="6" fill="#17324d"/>
+              <g class="trace-marker"><path class="marker-nose" d="M7,0 C3,3.6 -5,2.6 -5,0 C-5,-2.6 3,-3.6 7,0"/></g>
             </svg>
           </figure>
           <figure class="view-side">
@@ -1568,7 +1744,8 @@ tbody tr:hover {
             <div class="side-stage">
               <span class="side-tag">odraz přes špičku</span>
               <span class="side-pick">✦</span>
-              <div class="side-skater"></div>
+              <span class="side-puff"></span>
+              <div class="side-skater"><div class="side-hop"><div class="side-pose"></div></div></div>
             </div>
           </figure>
         </div>
@@ -1605,28 +1782,29 @@ tbody tr:hover {
           <figure class="view-top">
             <figcaption>Shora: stopa na ledě</figcaption>
             <svg viewBox="0 0 420 150">
-              <path class="tr in" d="M28,126 Q110,112 180,75"/>
+              <path class="tr ghost in" d="M28,126 Q110,112 180,75"/>
               <path class="tr fly" d="M180,75 L300,60"/>
-              <path class="tr out" d="M300,60 Q352,46 386,26"/>
+              <path class="tr ghost out" d="M300,60 Q352,46 386,26"/>
+              <path class="tr draw in entry-draw" d="M28,126 Q110,112 180,75" pathLength="100"/>
+              <path class="tr draw out exit-draw" d="M300,60 Q352,46 386,26" pathLength="100"/>
               <path class="tr swing" d="M198,96 a22,22 0 0 1 -36,4"/>
-              <circle cx="180" cy="75" r="5" fill="#4a90e2"/>
-              <circle cx="300" cy="60" r="5" fill="#ffb347"/>
+              <circle class="leg-dot a" cx="180" cy="75" r="5.5"/>
+              <circle class="leg-dot b" cx="300" cy="60" r="5.5"/>
               <text class="tr-note" x="146" y="122">švih volné nohy</text>
               <text class="tr-label dir" x="22" y="144">VZAD</text>
-              <text class="tr-foot" x="14" y="122">L</text>
-              <text class="tr-foot" x="294" y="83">P</text>
               <text class="tr-note" x="282" y="97">dopad vzad</text>
-              <path class="rot-glyph" d="M228,50 a11,9 0 1 1 8,13"/>
-              <path class="rot-glyph" d="M236,63 l-5.5,0.5 M236,63 l-1,-5"/>
+              <path class="rot-glyph" d="M236,50 a11,9 0 1 0 -8,13"/>
+              <path class="rot-glyph" d="M228,63 l5.5,0.5 M228,63 l1,-5"/>
               <text class="tr-label" x="214" y="33">1 otáčka</text>
-              <circle class="trace-dot" r="6" fill="#17324d"/>
+              <g class="trace-marker"><path class="marker-nose" d="M7,0 C3,3.6 -5,2.6 -5,0 C-5,-2.6 3,-3.6 7,0"/></g>
             </svg>
           </figure>
           <figure class="view-side">
             <figcaption>Z boku: výška a rotace</figcaption>
             <div class="side-stage">
               <span class="side-tag">odraz z hrany</span>
-              <div class="side-skater"></div>
+              <span class="side-puff"></span>
+              <div class="side-skater"><div class="side-hop"><div class="side-pose"></div></div></div>
             </div>
           </figure>
         </div>
@@ -1636,7 +1814,7 @@ tbody tr:hover {
         </p>
         <ul>
           <li>Když nevidíš špičku, zůstane salchow nebo rittberger.</li>
-          <li>Odraz z levé nohy, dopad na pravou – nohy se vymění.</li>
+          <li>Odraz z jedné nohy, dopad na druhou – nohy se vymění.</li>
           <li>Švih volné nohy je vidět i z dálky.</li>
         </ul>
         <a href="https://www.youtube.com/watch?v=hTKP1O-8BTM" target="_blank" class="btn-video">
@@ -1664,28 +1842,29 @@ tbody tr:hover {
           <figure class="view-top">
             <figcaption>Shora: stopa na ledě</figcaption>
             <svg viewBox="0 0 420 150">
-              <path class="tr out" d="M62,122 Q145,112 180,75"/>
+              <path class="tr ghost out" d="M62,122 Q145,112 180,75"/>
               <path class="tr out thin" d="M55,113 Q136,103 172,68"/>
               <path class="tr fly" d="M180,75 L300,60"/>
-              <path class="tr out" d="M300,60 Q352,46 386,26"/>
-              <circle cx="180" cy="75" r="5" fill="#ffb347"/>
-              <circle cx="300" cy="60" r="5" fill="#ffb347"/>
+              <path class="tr ghost out" d="M300,60 Q352,46 386,26"/>
+              <path class="tr draw out entry-draw" d="M62,122 Q145,112 180,75" pathLength="100"/>
+              <path class="tr draw out exit-draw" d="M300,60 Q352,46 386,26" pathLength="100"/>
+              <circle class="leg-dot a" cx="180" cy="75" r="5.5"/>
+              <circle class="leg-dot a" cx="300" cy="60" r="5.5"/>
               <text class="tr-note" x="52" y="140">zkřížené nohy = 2 stopy</text>
               <text class="tr-label dir" x="10" y="142">VZAD</text>
-              <text class="tr-foot" x="42" y="110">P</text>
-              <text class="tr-foot" x="294" y="83">P</text>
               <text class="tr-note" x="282" y="97">dopad vzad</text>
-              <path class="rot-glyph" d="M228,50 a11,9 0 1 1 8,13"/>
-              <path class="rot-glyph" d="M236,63 l-5.5,0.5 M236,63 l-1,-5"/>
+              <path class="rot-glyph" d="M236,50 a11,9 0 1 0 -8,13"/>
+              <path class="rot-glyph" d="M228,63 l5.5,0.5 M228,63 l1,-5"/>
               <text class="tr-label" x="214" y="33">1 otáčka</text>
-              <circle class="trace-dot" r="6" fill="#17324d"/>
+              <g class="trace-marker"><path class="marker-nose" d="M7,0 C3,3.6 -5,2.6 -5,0 C-5,-2.6 3,-3.6 7,0"/></g>
             </svg>
           </figure>
           <figure class="view-side">
             <figcaption>Z boku: výška a rotace</figcaption>
             <div class="side-stage">
               <span class="side-tag">odraz z hrany</span>
-              <div class="side-skater"></div>
+              <span class="side-puff"></span>
+              <div class="side-skater"><div class="side-hop"><div class="side-pose"></div></div></div>
             </div>
           </figure>
         </div>
@@ -1723,22 +1902,22 @@ tbody tr:hover {
           <figure class="view-top">
             <figcaption>Shora: stopa na ledě</figcaption>
             <svg viewBox="0 0 420 150">
-              <path class="tr in" d="M45,118 Q118,105 180,75"/>
+              <path class="tr ghost in" d="M45,118 Q118,105 180,75"/>
               <path class="tr fly" d="M180,75 L300,60"/>
-              <path class="tr out" d="M300,60 Q352,46 386,26"/>
-              <circle cx="180" cy="75" r="5" fill="#4a90e2"/>
-              <circle cx="300" cy="60" r="5" fill="#ffb347"/>
+              <path class="tr ghost out" d="M300,60 Q352,46 386,26"/>
+              <path class="tr draw in entry-draw" d="M45,118 Q118,105 180,75" pathLength="100"/>
+              <path class="tr draw out exit-draw" d="M300,60 Q352,46 386,26" pathLength="100"/>
+              <circle class="leg-dot a" cx="180" cy="75" r="5.5"/>
+              <circle class="leg-dot b" cx="300" cy="60" r="5.5"/>
               <text class="pick-star" x="155" y="96">✦</text>
-              <text class="tr-note" x="120" y="112">špička P</text>
+              <text class="tr-note" x="126" y="112">špička</text>
               <text class="tr-note" x="46" y="140">oblouk DO otočky</text>
               <text class="tr-label dir" x="34" y="128">VZAD</text>
-              <text class="tr-foot" x="28" y="114">L</text>
-              <text class="tr-foot" x="294" y="83">P</text>
               <text class="tr-note" x="282" y="97">dopad vzad</text>
-              <path class="rot-glyph" d="M228,50 a11,9 0 1 1 8,13"/>
-              <path class="rot-glyph" d="M236,63 l-5.5,0.5 M236,63 l-1,-5"/>
+              <path class="rot-glyph" d="M236,50 a11,9 0 1 0 -8,13"/>
+              <path class="rot-glyph" d="M228,63 l5.5,0.5 M228,63 l1,-5"/>
               <text class="tr-label" x="214" y="33">1 otáčka</text>
-              <circle class="trace-dot" r="6" fill="#17324d"/>
+              <g class="trace-marker"><path class="marker-nose" d="M7,0 C3,3.6 -5,2.6 -5,0 C-5,-2.6 3,-3.6 7,0"/></g>
             </svg>
           </figure>
           <figure class="view-side">
@@ -1746,7 +1925,8 @@ tbody tr:hover {
             <div class="side-stage">
               <span class="side-tag">odraz přes špičku</span>
               <span class="side-pick">✦</span>
-              <div class="side-skater"></div>
+              <span class="side-puff"></span>
+              <div class="side-skater"><div class="side-hop"><div class="side-pose"></div></div></div>
             </div>
           </figure>
         </div>
@@ -1783,22 +1963,22 @@ tbody tr:hover {
           <figure class="view-top">
             <figcaption>Shora: stopa na ledě</figcaption>
             <svg viewBox="0 0 420 150">
-              <path class="tr out" d="M12,48 Q120,92 180,75"/>
+              <path class="tr ghost out" d="M12,48 Q120,92 180,75"/>
               <path class="tr fly" d="M180,75 L300,60"/>
-              <path class="tr out" d="M300,60 Q352,46 386,26"/>
-              <circle cx="180" cy="75" r="5" fill="#ffb347"/>
-              <circle cx="300" cy="60" r="5" fill="#ffb347"/>
+              <path class="tr ghost out" d="M300,60 Q352,46 386,26"/>
+              <path class="tr draw out entry-draw" d="M12,48 Q120,92 180,75" pathLength="100"/>
+              <path class="tr draw out exit-draw" d="M300,60 Q352,46 386,26" pathLength="100"/>
+              <circle class="leg-dot a" cx="180" cy="75" r="5.5"/>
+              <circle class="leg-dot b" cx="300" cy="60" r="5.5"/>
               <text class="pick-star" x="155" y="92">✦</text>
-              <text class="tr-note" x="120" y="108">špička P</text>
+              <text class="tr-note" x="126" y="108">špička</text>
               <text class="tr-note" x="36" y="120">protioblouk: stáčí se OD otočky</text>
               <text class="tr-label dir" x="8" y="36">VZAD</text>
-              <text class="tr-foot" x="2" y="62">L</text>
-              <text class="tr-foot" x="294" y="83">P</text>
               <text class="tr-note" x="282" y="97">dopad vzad</text>
-              <path class="rot-glyph" d="M228,50 a11,9 0 1 1 8,13"/>
-              <path class="rot-glyph" d="M236,63 l-5.5,0.5 M236,63 l-1,-5"/>
+              <path class="rot-glyph" d="M236,50 a11,9 0 1 0 -8,13"/>
+              <path class="rot-glyph" d="M228,63 l5.5,0.5 M228,63 l1,-5"/>
               <text class="tr-label" x="214" y="33">1 otáčka</text>
-              <circle class="trace-dot" r="6" fill="#17324d"/>
+              <g class="trace-marker"><path class="marker-nose" d="M7,0 C3,3.6 -5,2.6 -5,0 C-5,-2.6 3,-3.6 7,0"/></g>
             </svg>
           </figure>
           <figure class="view-side">
@@ -1806,7 +1986,8 @@ tbody tr:hover {
             <div class="side-stage">
               <span class="side-tag">odraz přes špičku</span>
               <span class="side-pick">✦</span>
-              <div class="side-skater"></div>
+              <span class="side-puff"></span>
+              <div class="side-skater"><div class="side-hop"><div class="side-pose"></div></div></div>
             </div>
           </figure>
         </div>

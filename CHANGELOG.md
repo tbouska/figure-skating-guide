@@ -6,6 +6,18 @@ Všechny podstatné změny v tomto projektu jsou zaznamenány v tomto souboru.
 
 ### Changed
 
+- **guide**: nohy značené vztahově dvěma barvami (magenta a petrolejová,
+  stejná barva = stejná noha) místo absolutního L/P – tečky odrazu a dopadu
+  i hvězdička špičky na stopě mají stejné barvy jako nohy panáčka, takže
+  „dopad na píchající" a „stejná noha" jsou vidět jako shoda barev bez
+  ohledu na směr točení
+- **guide**: bohatší animace – oddělený vodorovný (lineární) a svislý
+  (zrychlovaný) pohyb dává parabolický oblouk skoku, rotace ve vzduchu
+  stroboskopickým převracením s oběma viditelnýma nohama, přikrčení,
+  dosednutí s prohnutím, stín pod bruslařem, obláček při dopadu; na stopě
+  shora jede kapkovitý bruslař s natočením (u axelu viditelně končí zády)
+  a stopa se kreslí průběžně pod ním
+
 - **guide**: přepracované vizualizace skoků na dvojí pohled – stopa na ledě
   shora (tvar nájezdu, barvy hran, píchnutí špičkou, nohy L/P, počet otáček)
   plus zjednodušený boční profil s vystřídanými pózami místo 3D otáčení
